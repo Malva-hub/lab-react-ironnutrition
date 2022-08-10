@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import './App.css';
 import 'antd/dist/antd.min.css';
+import { Row, Divider, Button } from 'antd';
 
 import foods from './foods.json';
 
@@ -29,10 +30,10 @@ function App() {
   };
 
   const deleteFood = (deleteOneFood) => {
-    const deleteFood = foodList.filter((eachFood) => {
+    const deleteFoods = visibleFoods.filter((eachFood) => {
       return eachFood.name !== deleteOneFood;
     });
-    setVisibleFoods(deleteFood);
+    setVisibleFoods(deleteFoods);
   };
 
   const toggleFormShowing = () => {
@@ -42,9 +43,9 @@ function App() {
   return (
     <div className="App">
       <h1>IronNutrition</h1>
-      <button onClick={toggleFormShowing}>
+      <Button onClick={toggleFormShowing}>
         {isFormShowing === true ? 'Ocultar Formulario' : 'Mostrar Formulario'}
-      </button>
+      </Button>
 
       {isFormShowing === true ? (
         <AddFoodForm
@@ -65,14 +66,17 @@ function App() {
             </div>
           )
         })} */}
-      {visibleFoods.map((eachFood, index) => {
-        return (
-          <div key={eachFood + index}>
-            <FoodBox eachFood={eachFood} deleteFood={deleteFood} />
-          </div>
-        );
-      })}
-
+        <Divider>Food List</Divider>
+        <Row style={{ width: '100%', justifyContent: 'center' }}>
+        {visibleFoods.length === 0 ?  "Oops! There is no more content to show" : 
+            visibleFoods.map((eachFood, index) => {
+            return (
+                <div key={eachFood + index}>
+                <FoodBox eachFood={eachFood} deleteFood={deleteFood} />
+                </div>
+            );
+        })}
+        </Row>
       
     </div>
   );
