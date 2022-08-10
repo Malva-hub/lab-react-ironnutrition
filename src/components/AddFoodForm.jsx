@@ -41,11 +41,14 @@ function AddFoodForm(props) {
     setCalories(0);
     setServings(0);
 
-    //props.setIsFormShowing(false);
+    props.setIsFormShowing(false);
   };
 
   return (
+
+    
     <form onSubmit={handleSubmit}>
+      
       <Divider>Add Food Entry</Divider>
 
       <label>Name</label>

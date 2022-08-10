@@ -1,5 +1,4 @@
-
-import {useState} from "react"
+import { useState } from 'react';
 
 import './App.css';
 import 'antd/dist/antd.min.css';
@@ -11,58 +10,53 @@ import AddFoodForm from './components/AddFoodForm';
 import Search from './components/Search';
 
 function App() {
-
-  const [foodList , setFoodList] = useState(foods)
+  const [foodList, setFoodList] = useState(foods);
 
   const [visibleFoods, setVisibleFoods] = useState(foods);
-  
+
   const [isFormShowing, setIsFormShowing] = useState(false);
 
-  
-
   const addNewFoodToList = (food) => {
-   
-    setFoodList ( [...foodList, food])
-    setVisibleFoods([...visibleFoods, food])
-    
-  }  
-
+    setFoodList([...foodList, food]);
+    setVisibleFoods([...visibleFoods, food]);
+  };
 
   const filterFood = (searchFood) => {
     const filterFood = foodList.filter((eachFood) => {
-      return eachFood.name.includes(searchFood)
-    })
-    setVisibleFoods(filterFood)
-    
-
-
-  }
+      return eachFood.name.includes(searchFood);
+    });
+    setVisibleFoods(filterFood);
+  };
 
   const deleteFood = (deleteOneFood) => {
-
     const deleteFood = foodList.filter((eachFood) => {
-      return eachFood.name  !== deleteOneFood 
-    })
-    setVisibleFoods(deleteFood)
+      return eachFood.name !== deleteOneFood;
+    });
+    setVisibleFoods(deleteFood);
+  };
 
-  }
- 
-
-  
-  // const toggleFormShowing = () => {
-    
-  //   setIsFormShowing(!isFormShowing)
-    
-  // }
+  const toggleFormShowing = () => {
+    setIsFormShowing(!isFormShowing);
+  };
 
   return (
     <div className="App">
-        <h1>IronNutrition</h1>
+      <h1>IronNutrition</h1>
+      <button onClick={toggleFormShowing}>
+        {isFormShowing === true ? 'Ocultar Formulario' : 'Mostrar Formulario'}
+      </button>
 
-        <Search filterFood={filterFood}/>
+      {isFormShowing === true ? (
+        <AddFoodForm
+          addNewFoodToList={addNewFoodToList}
+          setIsFormShowing={setIsFormShowing}
+        />
+      ) : null}
 
-        {/* Iteración 1 */}
-        {/* {foodList.map ((eachFood, index) => {
+      <Search filterFood={filterFood} />
+
+      {/* Iteración 1 */}
+      {/* {foodList.map ((eachFood, index) => {
       
           return (
             <div key={eachFood+index}>
@@ -71,20 +65,15 @@ function App() {
             </div>
           )
         })} */}
-       {visibleFoods.map ((eachFood, index) => {
-      
-      return (
-          <div key={eachFood+index}>
-          <FoodBox eachFood={eachFood} deleteFood={deleteFood} />
+      {visibleFoods.map((eachFood, index) => {
+        return (
+          <div key={eachFood + index}>
+            <FoodBox eachFood={eachFood} deleteFood={deleteFood} />
           </div>
-         )
+        );
       })}
 
-    {/* {isFormShowing === true ? <AddFoodForm addNewFoodToList={addNewFoodToList} setIsFormShowing={setIsFormShowing}/> : null } */}
-      <AddFoodForm addNewFoodToList={addNewFoodToList}/>
       
-       
-                  
     </div>
   );
 }
